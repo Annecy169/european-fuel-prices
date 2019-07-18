@@ -4,8 +4,8 @@ from scrapy.crawler import CrawlerProcess
 countryFuelPrices = {"fuelPrices": []}
 
 class MySpider(scrapy.Spider):
-    name = 'mmtdigital.co.uk'
-    allowed_domains = ['mmtdigital.co.uk']
+    name = 'Petrol Prices'
+    allowed_domains = ['cargopedia.net']
     start_urls = [
         'https://www.cargopedia.net/europe-fuel-prices',
     ]

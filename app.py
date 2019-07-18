@@ -12,10 +12,30 @@ def fuel_prices(request):
     try:
         requestbody = request.body
         bodyJson = json.loads(requestbody)
-        print(bodyJson['country'])
-        return bodyJson['country']
+        fuelData = { "Country Found": False }
+
+        for value in fuelPrice['fuelPrices']:
+            if (bodyJson['country'].lower().find("all") >= 0):
+                fuelData = fuelPrice
+            elif( value['country'].lower().find(bodyJson['country'].lower()) >= 0):
+                fuelData = {
+                    "country": value['country'],
+                    "petrol": value['petrol'],
+                    "diesel": value['diesel']
+                }
+
+        return fuelData
     except:
-        return fuelPrice
+        return { 
+            "Error": 404,
+            "Required Content Type": "application/json",
+            "Description": "For all countries please add the JSON that is inside the body tag below",
+            "Body": [
+                {
+                    "country": "all"
+                }
+            ]
+        }
 
 
 if __name__ == '__main__':
@@ -23,4 +43,4 @@ if __name__ == '__main__':
         config.add_route('fuel', '/')
         config.add_view(fuel_prices, route_name='fuel', request_method='GET', renderer='json')
         app = config.make_wsgi_app()
-    serve(app, host='0.0.0.0', port=3032)
+    serve(app, host='0.0.0.0', port=3000)
