@@ -1,6 +1,8 @@
 import scrapy
 from scrapy.crawler import CrawlerProcess
 
+countryFuelPrices = {"fuelPrices": []}
+
 class MySpider(scrapy.Spider):
     name = 'mmtdigital.co.uk'
     allowed_domains = ['mmtdigital.co.uk']
@@ -18,14 +20,20 @@ class MySpider(scrapy.Spider):
                 infoArray = namePrice.split("</td><td>")
                 country = infoArray[0].replace(" ","",1)
                 petrol = infoArray[1]
-                print("---")
-                print(country)
-                print(petrol)
-                print("---")
+                diesel = infoArray[2]
+                countryFuelPrices['fuelPrices'].append({
+                    "country": country,
+                    "petrol": petrol,
+                    "diesel": diesel
+                })
             except :
                 savedVar = "failed"
 
-process = CrawlerProcess()
 
-d = process.crawl(MySpider)
-process.start()
+def handelProcess():
+    process = CrawlerProcess()
+    d = process.crawl(MySpider)
+    process.start()
+
+def getFuelPrices():
+    return countryFuelPrices
