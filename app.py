@@ -21,7 +21,8 @@ def fuel_prices(request):
                 fuelData = {
                     "country": value['country'],
                     "petrol": value['petrol'],
-                    "diesel": value['diesel']
+                    "diesel": value['diesel'],
+                    "currency": value['currency'],
                 }
 
         return fuelData

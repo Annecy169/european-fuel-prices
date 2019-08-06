@@ -24,7 +24,8 @@ class MySpider(scrapy.Spider):
                 countryFuelPrices['fuelPrices'].append({
                     "country": country,
                     "petrol": petrol,
-                    "diesel": diesel
+                    "diesel": diesel,
+                    "currency": "Euro"
                 })
             except :
                 savedVar = "failed"
